@@ -46,7 +46,6 @@
             background-attachment: fixed;
         }
 
-        /* Subtle animated background orbs */
         body::before,
         body::after {
             content: '';
@@ -76,22 +75,11 @@
         }
 
         @keyframes floatBubble {
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-            20% {
-                transform: translate(30px, -40px) scale(1.08);
-            }
-            40% {
-                transform: translate(-20px, 25px) scale(0.94);
-            }
-            60% {
-                transform: translate(-35px, -15px) scale(1.05);
-            }
-            80% {
-                transform: translate(25px, 35px) scale(0.96);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            20% { transform: translate(30px, -40px) scale(1.08); }
+            40% { transform: translate(-20px, 25px) scale(0.94); }
+            60% { transform: translate(-35px, -15px) scale(1.05); }
+            80% { transform: translate(25px, 35px) scale(0.96); }
         }
 
         .container {
@@ -118,13 +106,8 @@
         }
 
         @keyframes gentlePulse {
-            0%,
-            100% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
         }
 
         .header h1 {
@@ -160,7 +143,6 @@
             margin-bottom: 24px;
         }
 
-        /* Toggle Button */
         .toggle-btn {
             flex: 1 1 140px;
             min-width: 130px;
@@ -243,37 +225,20 @@
             box-shadow: none;
         }
 
-        /* Shake animation for blocked click */
         .toggle-btn.blocked.shake {
             animation: shake 0.45s ease;
         }
 
         @keyframes shake {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-            15% {
-                transform: translateX(-6px);
-            }
-            30% {
-                transform: translateX(6px);
-            }
-            45% {
-                transform: translateX(-5px);
-            }
-            60% {
-                transform: translateX(4px);
-            }
-            75% {
-                transform: translateX(-2px);
-            }
-            90% {
-                transform: translateX(2px);
-            }
+            0%, 100% { transform: translateX(0); }
+            15% { transform: translateX(-6px); }
+            30% { transform: translateX(6px); }
+            45% { transform: translateX(-5px); }
+            60% { transform: translateX(4px); }
+            75% { transform: translateX(-2px); }
+            90% { transform: translateX(2px); }
         }
 
-        /* Emoji display */
         .toggle-btn .emoji {
             font-size: 3rem;
             line-height: 1;
@@ -289,7 +254,6 @@
             opacity: 0.7;
         }
 
-        /* Label */
         .toggle-btn .label {
             font-size: 1.05rem;
             font-weight: 600;
@@ -304,7 +268,6 @@
             color: var(--blocked-text);
         }
 
-        /* Status tag */
         .toggle-btn .status-tag {
             font-size: 0.7rem;
             font-weight: 600;
@@ -336,7 +299,6 @@
             color: #c0392b;
         }
 
-        /* Message area */
         .message-area {
             min-height: 48px;
             display: flex;
@@ -376,7 +338,6 @@
             color: #922b21;
         }
 
-        /* Reset link */
         .reset-link {
             display: inline-block;
             margin-top: 12px;
@@ -395,7 +356,6 @@
             color: #555;
         }
 
-        /* Responsive */
         @media (max-width: 500px) {
             .container {
                 padding: 28px 16px 24px;
@@ -436,9 +396,7 @@
     </style>
 </head>
 <body>
-
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="icon-row">🎯</div>
             <h1>Pick Two</h1>
@@ -446,61 +404,53 @@
         </div>
         <div class="divider"></div>
 
-        <!-- Buttons -->
         <div class="buttons-row">
             <button class="toggle-btn off" data-name="good" aria-label="Good - Available">
-                <span class="emoji">❌</span>
+                <span class="emoji">⚪</span>
                 <span class="label">Good</span>
                 <span class="status-tag">Available</span>
             </button>
             <button class="toggle-btn off" data-name="fast" aria-label="Fast - Available">
-                <span class="emoji">❌</span>
+                <span class="emoji">⚪</span>
                 <span class="label">Fast</span>
                 <span class="status-tag">Available</span>
             </button>
             <button class="toggle-btn off" data-name="easy" aria-label="Easy - Available">
-                <span class="emoji">❌</span>
+                <span class="emoji">⚪</span>
                 <span class="label">Easy</span>
                 <span class="status-tag">Available</span>
             </button>
         </div>
 
-        <!-- Message -->
         <div class="message-area">
             <p class="message" id="message">Choose up to two priorities 👆</p>
         </div>
 
-        <!-- Reset -->
         <button class="reset-link" id="resetBtn" title="Reset all selections">↺ Start over</button>
     </div>
 
     <script>
         (function() {
-            // --- State ---
             const state = {
-                good: 'off', // 'off' | 'on' | 'blocked'
+                good: 'off',
                 fast: 'off',
                 easy: 'off',
             };
 
-            // --- DOM refs ---
             const buttons = document.querySelectorAll('.toggle-btn');
             const messageEl = document.getElementById('message');
             const resetBtn = document.getElementById('resetBtn');
 
-            // Map button data-name to state key
             const nameToKey = {
                 good: 'good',
                 fast: 'fast',
                 easy: 'easy',
             };
 
-            // --- Messages based on which are ON ---
             function getMessage() {
                 const onKeys = Object.entries(state)
                     .filter(([, val]) => val === 'on')
                     .map(([key]) => key);
-
                 const count = onKeys.length;
                 const sorted = onKeys.sort().join('+');
 
@@ -532,20 +482,13 @@
                 return { text: '', emphasized: false };
             }
 
-            // --- Update all button visuals and message ---
             function updateUI() {
-                // Update each button's CSS classes and content
                 buttons.forEach((btn) => {
                     const name = btn.dataset.name;
                     const currentState = state[nameToKey[name]];
-
-                    // Remove all state classes
                     btn.classList.remove('on', 'off', 'blocked');
-
-                    // Add current state class
                     btn.classList.add(currentState);
 
-                    // Update emoji
                     const emojiSpan = btn.querySelector('.emoji');
                     const statusTag = btn.querySelector('.status-tag');
 
@@ -556,55 +499,46 @@
                             btn.setAttribute('aria-label', `${name.charAt(0).toUpperCase() + name.slice(1)} — Selected`);
                             break;
                         case 'off':
-                            emojiSpan.textContent = '❌';
+                            emojiSpan.textContent = '⚪'; // Neutral circle instead of ❌
                             statusTag.textContent = 'Available';
-                            btn.setAttribute('aria-label',
-                                `${name.charAt(0).toUpperCase() + name.slice(1)} — Available`);
+                            btn.setAttribute('aria-label', `${name.charAt(0).toUpperCase() + name.slice(1)} — Available`);
                             break;
                         case 'blocked':
                             emojiSpan.textContent = '🚫';
                             statusTag.textContent = 'Unavailable';
-                            btn.setAttribute('aria-label',
-                                `${name.charAt(0).toUpperCase() + name.slice(1)} — Unavailable`);
+                            btn.setAttribute('aria-label', `${name.charAt(0).toUpperCase() + name.slice(1)} — Unavailable`);
                             break;
                     }
                 });
 
-                // Update message
                 const msg = getMessage();
-                messageEl.innerHTML = ''; // Clear
+                messageEl.innerHTML = '';
                 if (msg.html) {
                     messageEl.innerHTML = msg.html;
                 } else {
                     messageEl.textContent = msg.text;
                 }
-
                 if (msg.emphasized) {
                     messageEl.classList.add('emphasized');
                 } else {
                     messageEl.classList.remove('emphasized');
                 }
 
-                // Update reset button visibility
                 const anyOn = Object.values(state).some((s) => s === 'on');
                 resetBtn.style.opacity = anyOn ? '1' : '0.4';
                 resetBtn.style.pointerEvents = anyOn ? 'auto' : 'none';
                 resetBtn.setAttribute('aria-disabled', anyOn ? 'false' : 'true');
             }
 
-            // --- Recalculate blocked states ---
             function recalculateBlocking() {
                 const onCount = Object.values(state).filter((s) => s === 'on').length;
-
                 if (onCount >= 2) {
-                    // Block any that are currently 'off'
                     for (const key in state) {
                         if (state[key] === 'off') {
                             state[key] = 'blocked';
                         }
                     }
                 } else {
-                    // Unblock any blocked ones (onCount is 0 or 1)
                     for (const key in state) {
                         if (state[key] === 'blocked') {
                             state[key] = 'off';
@@ -613,16 +547,14 @@
                 }
             }
 
-            // --- Handle button click ---
             function handleButtonClick(btn) {
                 const name = btn.dataset.name;
                 const key = nameToKey[name];
                 const currentState = state[key];
 
-                // If blocked, shake and ignore
                 if (currentState === 'blocked') {
                     btn.classList.remove('shake');
-                    void btn.offsetWidth; // Force reflow to restart animation
+                    void btn.offsetWidth;
                     btn.classList.add('shake');
                     btn.addEventListener('animationend', function handler() {
                         btn.classList.remove('shake');
@@ -631,37 +563,29 @@
                     return;
                 }
 
-                // Toggle: off → on, on → off
                 if (currentState === 'off') {
                     state[key] = 'on';
                 } else if (currentState === 'on') {
                     state[key] = 'off';
                 }
 
-                // Recalculate blocking
                 recalculateBlocking();
-
-                // Update UI
                 updateUI();
             }
 
-            // --- Reset all ---
             function resetAll() {
                 for (const key in state) {
                     state[key] = 'off';
                 }
                 updateUI();
-                // Small pulse on reset button
                 resetBtn.style.transform = 'scale(1.15)';
                 setTimeout(() => {
                     resetBtn.style.transform = 'scale(1)';
                 }, 150);
             }
 
-            // --- Add event listeners ---
             buttons.forEach((btn) => {
                 btn.addEventListener('click', () => handleButtonClick(btn));
-                // Prevent double-tap zoom on mobile
                 btn.addEventListener('touchstart', function(e) {
                     if (state[nameToKey[btn.dataset.name]] === 'blocked') {
                         e.preventDefault();
@@ -672,17 +596,14 @@
 
             resetBtn.addEventListener('click', resetAll);
 
-            // --- Keyboard support: allow Enter/Space on focused buttons ---
             document.addEventListener('keydown', (e) => {
                 const focused = document.activeElement;
-                if (focused && focused.classList.contains('toggle-btn') && (e.key === 'Enter' || e.key ===
-                        ' ')) {
+                if (focused && focused.classList.contains('toggle-btn') && (e.key === 'Enter' || e.key === ' ')) {
                     e.preventDefault();
                     handleButtonClick(focused);
                 }
             });
 
-            // --- Initial UI render ---
             updateUI();
             resetBtn.style.opacity = '0.4';
             resetBtn.style.pointerEvents = 'none';
