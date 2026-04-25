@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick Two — Good · Fast · Easy</title>
+    <!-- 🎯 Favicon (emoji-based, no image file needed) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎯</text></svg>">
     <style>
         :root {
             --bg: #f0f2f5;
@@ -499,7 +501,7 @@
                             btn.setAttribute('aria-label', `${name.charAt(0).toUpperCase() + name.slice(1)} — Selected`);
                             break;
                         case 'off':
-                            emojiSpan.textContent = '⚪'; // Neutral circle instead of ❌
+                            emojiSpan.textContent = '⚪';  // Neutral circle
                             statusTag.textContent = 'Available';
                             btn.setAttribute('aria-label', `${name.charAt(0).toUpperCase() + name.slice(1)} — Available`);
                             break;
